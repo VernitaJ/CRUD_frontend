@@ -4,20 +4,20 @@ import UserTable from "./UserTable";
 import AddUserForm from "./AddUserForm";
 import EditUserForm from "./EditUserForm";
 
-const BACKEND_ROOT = "https://o0f92.sse.codesandbox.io/";
+const BACKEND_ROOT = "https://5dsww.sse.codesandbox.io/";
 
 const App = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    console.log("hey");
+    console.log("useEffect");
     fetch(BACKEND_ROOT)
-      .then(response => response.json(users))
-      .then(users => setUsers(users))
-      .catch(err => console.error(err));
+      .then((response) => response.json(users))
+      .then((users) => setUsers(users))
+      .catch((err) => console.error(err));
   }, []);
 
-  const addUser = user => {
+  const addUser = (user) => {
     console.log(user);
     fetch(BACKEND_ROOT, {
       method: "POST",
@@ -27,22 +27,22 @@ const App = () => {
       mode: "cors",
       body: JSON.stringify(user)
     })
-      .then(response => response.json())
+      .then((response) => response.json())
       .then(() => {
         setUsers([...users, user]);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err.message);
       });
   };
 
-  const deleteUser = id => {
+  const deleteUser = (id) => {
     fetch(`${BACKEND_ROOT}${id}`, { method: "DELETE", mode: "cors" })
       .then(() => {
-        setUsers(users.filter(user => user.id !== id));
+        setUsers(users.filter((user) => user.id !== id));
         setEditing(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err.message);
         console.log(err);
       });
@@ -55,7 +55,7 @@ const App = () => {
   const initialFormState = { id: null, name: "", username: "" };
   const [currentUser, setCurrentUser] = useState(initialFormState);
 
-  const editRow = user => {
+  const editRow = (user) => {
     setEditing(true);
     setCurrentUser({ id: user.id, name: user.name, username: user.username });
   };
@@ -90,12 +90,12 @@ const App = () => {
       // body: JSON.stringify(updatedUser)
       body: JSON.stringify(updatedUser)
     })
-      .then(response => response.json())
+      .then((response) => response.json())
       .then(() => {
         setEditing(false);
-        setUsers(users.map(user => (user.id === id ? updatedUser : user)));
+        setUsers(users.map((user) => (user.id === id ? updatedUser : user)));
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err.message);
       });
   };
